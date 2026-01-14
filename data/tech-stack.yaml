@@ -1,0 +1,43 @@
+tech_stack:
+  - name: "Python"
+    category: "编程语言"
+    level: "熟练"
+    experience: "3年+"
+    description: "数据分析、机器学习、Web开发"
+    icon: "fa-brands fa-python"
+    
+  - name: "机器学习"
+    category: "AI/数据科学"
+    level: "熟练"
+    experience: "2年+"
+    description: "监督学习、无监督学习、深度学习"
+    icon: "fa-solid fa-brain"
+    
+  - name: "数据分析"
+    category: "数据处理"
+    level: "熟练"
+    experience: "2年+"
+    description: "Pandas、NumPy、数据清洗与可视化"
+    icon: "fa-solid fa-chart-line"
+    
+  - name: "数据结构"
+    category: "计算机基础"
+    level: "熟练"
+    experience: "3年+"
+    description: "高效的数据组织、存储和操作能力"
+    icon: "fa-solid fa-sitemap"
+    
+  - name: "计算机网络"
+    category: "计算机基础"
+    level: "熟练"
+    experience: "2年+"
+    description: "网络协议和数据传输原理"
+    icon: "fa-solid fa-network-wired"
+    
+  - name: "系统管理"
+    category: "计算机基础"
+    level: "熟练"
+    experience: "2年+"
+    description: "进程/内存管理及文件系统核心概念"
+    icon: "fa-solid fa-server"
+

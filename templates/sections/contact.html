@@ -1,0 +1,36 @@
+<!-- 联系区域 -->
+<section id="contact" class="py-20 px-4 md:px-8 bg-apple-lightgray">
+    <div class="container mx-auto max-w-3xl text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6 reveal-element">联系我</h2>
+        <p class="text-apple-gray text-lg mb-10 reveal-element" data-sr-delay="200">
+            欢迎通过以下方式交流，我会尽快回复
+        </p>
+        <div class="flex flex-col md:flex-row justify-center items-center gap-6 mb-8 reveal-element" data-sr-delay="300">
+            <a href="tel:{{ personal.phone }}" class="flex items-center text-lg text-apple-black hover:text-apple-hover transition-colors">
+                <i class="fa-solid fa-phone mr-3 text-apple-hover"></i> {{ personal.phone }}
+            </a>
+            <span class="text-apple-gray">|</span>
+            <a href="mailto:{{ personal.email }}" class="flex items-center text-lg text-apple-black hover:text-apple-hover transition-colors">
+                <i class="fa-solid fa-envelope mr-3 text-apple-hover"></i> 邮箱联系
+            </a>
+        </div>
+        <div class="flex justify-center space-x-8 text-2xl reveal-element" data-sr-delay="400">
+            {% if personal.social.github %}
+            <a href="{{ personal.social.github }}" class="text-apple-black hover:text-apple-hover transition-all hover:scale-110">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            {% endif %}
+            {% if personal.social.wechat %}
+            <a href="{{ personal.social.wechat }}" class="text-apple-black hover:text-apple-hover transition-all hover:scale-110">
+                <i class="fa-brands fa-weixin"></i>
+            </a>
+            {% endif %}
+            {% if personal.social.python %}
+            <a href="{{ personal.social.python }}" class="text-apple-black hover:text-apple-hover transition-all hover:scale-110">
+                <i class="fa-brands fa-python"></i>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+

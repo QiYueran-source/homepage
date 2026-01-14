@@ -1,0 +1,7 @@
+factor_docs:
+  - name: "数据预测因子文档"
+    type: "document"
+    description: "香烟销量预测项目的因子分析文档"
+    file: "#"
+    date: "2025.02"
+

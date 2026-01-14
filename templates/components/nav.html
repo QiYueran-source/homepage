@@ -1,0 +1,78 @@
+<!-- 顶部导航栏（苹果磨砂玻璃+固定） -->
+<nav id="main-nav" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 py-4">
+    <div class="container mx-auto px-4 md:px-8 flex justify-between items-center">
+        <!-- 博客LOGO（个性化） -->
+        <a href="#home" class="text-xl font-medium text-apple-black hover:text-apple-hover transition-colors">
+            <i class="fa-solid fa-code mr-2"></i>{{ personal.name }} | Python博客
+        </a>
+        
+        <!-- 桌面端导航菜单 -->
+        <div class="hidden md:flex space-x-8 items-center">
+            <a href="#home" class="text-apple-black hover:text-apple-hover transition-colors">首页</a>
+            
+            <!-- 博文下拉菜单 -->
+            <div class="dropdown relative">
+                <a href="#blog" class="text-apple-black hover:text-apple-hover transition-colors flex items-center">
+                    博文 <i class="fa-solid fa-chevron-down ml-1 text-xs"></i>
+                </a>
+                <div class="dropdown-menu absolute top-full left-0 mt-2 bg-apple-white rounded-lg shadow-lg py-2 min-w-[150px]">
+                    <a href="#blog" data-category="tech-notes" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors">技术笔记</a>
+                    <a href="#blog" data-category="finance" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors">经济金融</a>
+                    <a href="#blog" data-category="essays" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors">个人随想</a>
+                </div>
+            </div>
+            
+            <!-- 关于我下拉菜单 -->
+            <div class="dropdown relative">
+                <a href="#about" class="text-apple-black hover:text-apple-hover transition-colors flex items-center">
+                    关于我 <i class="fa-solid fa-chevron-down ml-1 text-xs"></i>
+                </a>
+                <div class="dropdown-menu absolute top-full left-0 mt-2 bg-apple-white rounded-lg shadow-lg py-2 min-w-[180px]">
+                    <a href="#resume" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors">个人简历</a>
+                    <a href="#projects" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors">项目经历</a>
+                    <a href="#tech-stack" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors">技术栈</a>
+                    <div class="relative dropdown-submenu">
+                        <a href="#documents" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors flex items-center justify-between">
+                            文档资料 <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </a>
+                        <div class="dropdown-menu absolute left-full top-0 ml-2 bg-apple-white rounded-lg shadow-lg py-2 min-w-[150px]">
+                            <a href="#documents" data-category="honors" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors">荣誉奖项</a>
+                            <a href="#documents" data-category="certificates" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors">证书</a>
+                            <a href="#documents" data-category="factor-docs" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors">因子文档</a>
+                            <a href="#documents" data-category="datasets" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors">数据集</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="#contact" class="text-apple-black hover:text-apple-hover transition-colors">联系我</a>
+        </div>
+        
+        <!-- 移动端汉堡菜单 -->
+        <button id="menu-btn" class="md:hidden text-apple-black text-xl">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </div>
+    
+    <!-- 移动端菜单（默认隐藏） -->
+    <div id="mobile-menu" class="md:hidden hidden bg-apple-white absolute top-full left-0 w-full py-4 shadow-md backdrop-blur-md">
+        <div class="container mx-auto px-4 flex flex-col space-y-4">
+            <a href="#home" class="text-apple-black hover:text-apple-hover transition-colors py-2">首页</a>
+            <div class="pl-4 border-l-2 border-apple-lightgray">
+                <a href="#blog" class="text-apple-black hover:text-apple-hover transition-colors py-2 block font-medium">博文</a>
+                <a href="#blog" data-category="tech-notes" class="text-apple-gray hover:text-apple-hover transition-colors py-2 block pl-4">技术笔记</a>
+                <a href="#blog" data-category="finance" class="text-apple-gray hover:text-apple-hover transition-colors py-2 block pl-4">经济金融</a>
+                <a href="#blog" data-category="essays" class="text-apple-gray hover:text-apple-hover transition-colors py-2 block pl-4">个人随想</a>
+            </div>
+            <div class="pl-4 border-l-2 border-apple-lightgray">
+                <a href="#about" class="text-apple-black hover:text-apple-hover transition-colors py-2 block font-medium">关于我</a>
+                <a href="#resume" class="text-apple-gray hover:text-apple-hover transition-colors py-2 block pl-4">个人简历</a>
+                <a href="#projects" class="text-apple-gray hover:text-apple-hover transition-colors py-2 block pl-4">项目经历</a>
+                <a href="#tech-stack" class="text-apple-gray hover:text-apple-hover transition-colors py-2 block pl-4">技术栈</a>
+                <a href="#documents" class="text-apple-gray hover:text-apple-hover transition-colors py-2 block pl-4">文档资料</a>
+            </div>
+            <a href="#contact" class="text-apple-black hover:text-apple-hover transition-colors py-2">联系我</a>
+        </div>
+    </div>
+</nav>
+

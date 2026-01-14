@@ -1,0 +1,22 @@
+projects:
+  - name: "香烟销量和销售额预测"
+    subtitle: "多模型集成学习"
+    period: "2024.12 - 2025.02"
+    award: "钉钉杯数模比赛三等奖"
+    description: "基于多模型集成学习的销量预测系统，结合ARIMA、LSTM、Prophet和XGBoost模型"
+    image: "https://picsum.photos/seed/project1/800/500"
+    technologies:
+      - "Python"
+      - "机器学习"
+      - "时间序列分析"
+      - "ARIMA"
+      - "LSTM"
+      - "Prophet"
+      - "XGBoost"
+    details:
+      - "预处理销售数据，处理异常值和缺失值保障数据质量"
+      - "应用ARIMA、LSTM、Prophet、XGBoost模型进行预测"
+      - "线性回归作为元学习器集成模型，提升预测精度"
+    github: "#"
+    demo: "#"
+

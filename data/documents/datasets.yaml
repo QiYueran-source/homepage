@@ -1,0 +1,8 @@
+datasets:
+  - name: "销售数据集"
+    type: "dataset"
+    description: "香烟销量和销售额历史数据"
+    file: "#"
+    size: "10MB"
+    format: "CSV"
+

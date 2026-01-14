@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% include "sections/home.html" %}
+    {% include "sections/blog.html" %}
+    <div id="about">
+        {% include "sections/about/resume.html" %}
+        {% include "sections/about/projects.html" %}
+        {% include "sections/about/tech-stack.html" %}
+        {% include "sections/about/documents.html" %}
+    </div>
+    {% include "sections/contact.html" %}
+{% endblock %}
+

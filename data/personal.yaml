@@ -1,0 +1,16 @@
+name: "梁庭威"
+gender: "男"
+age: 21
+phone: "18682166942"
+email: "example@mail.com"
+job_title: "Python开发"
+city: "深圳"
+site_title: "梁庭威 | Python技术博客"
+site_subtitle: "数据驱动 · 极简 · 成长"
+hero_title: "数据驱动 · Python实践"
+hero_subtitle: "专注数据处理、机器学习与Python开发，用代码解决实际问题"
+social:
+  github: "#"
+  wechat: "#"
+  python: "#"
+

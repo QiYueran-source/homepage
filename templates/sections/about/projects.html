@@ -1,0 +1,58 @@
+<!-- 项目经历区 -->
+<section id="projects" class="py-20 px-4 md:px-8 bg-apple-white">
+    <div class="container mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center reveal-element">项目经历</h2>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {% for project in projects %}
+            <div class="card-hover bg-apple-card-gradient rounded-xl overflow-hidden reveal-element" data-sr-delay="{{ loop.index0 * 200 }}">
+                {% if project.image %}
+                <img src="{{ project.image }}" alt="{{ project.name }}" class="w-full h-48 object-cover">
+                {% endif %}
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-xl font-semibold">{{ project.name }}</h3>
+                            {% if project.subtitle %}
+                            <p class="text-apple-gray text-sm mt-1">{{ project.subtitle }}</p>
+                            {% endif %}
+                        </div>
+                        <span class="text-apple-gray text-sm">{{ project.period }}</span>
+                    </div>
+                    {% if project.award %}
+                    <p class="text-apple-hover text-sm mb-3">
+                        <i class="fa-solid fa-trophy mr-1"></i>{{ project.award }}
+                    </p>
+                    {% endif %}
+                    <p class="text-apple-gray mb-4">{{ project.description }}</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        {% for tech in project.technologies %}
+                        <span class="bg-apple-lightgray px-3 py-1 rounded-full text-sm">{{ tech }}</span>
+                        {% endfor %}
+                    </div>
+                    {% if project.details %}
+                    <ul class="list-disc list-inside text-apple-gray text-sm mb-4 space-y-1">
+                        {% for detail in project.details %}
+                        <li>{{ detail }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    <div class="flex space-x-4">
+                        {% if project.github %}
+                        <a href="{{ project.github }}" class="text-apple-hover font-medium hover:underline">
+                            <i class="fa-brands fa-github mr-1"></i>GitHub
+                        </a>
+                        {% endif %}
+                        {% if project.demo %}
+                        <a href="{{ project.demo }}" class="text-apple-hover font-medium hover:underline">
+                            <i class="fa-solid fa-external-link mr-1"></i>演示
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+

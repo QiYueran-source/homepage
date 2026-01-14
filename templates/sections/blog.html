@@ -1,0 +1,48 @@
+<!-- 博文区（苹果风格卡片+分类切换） -->
+<section id="blog" class="py-20 px-4 md:px-8 bg-apple-white">
+    <div class="container mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center reveal-element">我的博文</h2>
+        
+        <!-- 分类标签 -->
+        <div class="flex justify-center mb-12 flex-wrap gap-4">
+            <button class="blog-tab active bg-apple-hover text-apple-white px-6 py-2 rounded-full transition-all hover:scale-105" data-category="tech-notes">
+                技术笔记
+            </button>
+            <button class="blog-tab border border-apple-gray text-apple-black px-6 py-2 rounded-full transition-all hover:scale-105" data-category="finance">
+                经济金融
+            </button>
+            <button class="blog-tab border border-apple-gray text-apple-black px-6 py-2 rounded-full transition-all hover:scale-105" data-category="essays">
+                个人随想
+            </button>
+        </div>
+        
+        <!-- 文章网格 -->
+        <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for article in articles %}
+            <div class="card-hover bg-apple-card-gradient rounded-xl overflow-hidden reveal-element" data-sr-delay="{{ loop.index0 * 200 }}">
+                <img src="{{ article.image }}" alt="{{ article.title }}" class="w-full h-60 object-cover">
+                <div class="p-6">
+                    <span class="text-apple-gray text-sm">{{ article.date }}</span>
+                    <h3 class="text-xl font-semibold mt-2 mb-3 hover:text-apple-hover transition-colors">
+                        <a href="#">{{ article.title }}</a>
+                    </h3>
+                    <p class="text-apple-gray mb-4">
+                        {{ article.excerpt }}
+                    </p>
+                    <a href="#" class="text-apple-hover font-medium flex items-center">
+                        阅读全文 <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- 加载更多按钮 -->
+        <div class="text-center mt-12 reveal-element" data-sr-delay="600">
+            <button class="border border-apple-gray text-apple-black px-8 py-3 rounded-full hover:bg-apple-lightgray transition-all hover:scale-105">
+                加载更多 <i class="fa-solid fa-chevron-down ml-2"></i>
+            </button>
+        </div>
+    </div>
+</section>
+

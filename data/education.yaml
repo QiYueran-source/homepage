@@ -1,0 +1,13 @@
+education:
+  - school: "湛江科技学院"
+    major: "数字媒体技术"
+    degree: "本科"
+    start_year: 2022
+    end_year: 2026
+    courses:
+      - "数据结构"
+      - "计算机图形学"
+      - "数字图像处理"
+      - "计算机网络"
+    extra: "被学校聘为辅导员助理"
+

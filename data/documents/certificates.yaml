@@ -1,0 +1,16 @@
+certificates:
+  - name: "驾驶证C1"
+    type: "certificate"
+    description: "机动车驾驶证"
+    file: "#"
+    
+  - name: "普通话二级乙等"
+    type: "certificate"
+    description: "普通话水平测试"
+    file: "#"
+    
+  - name: "微信公众号运营"
+    type: "certificate"
+    description: "微信公众号运营证书"
+    file: "#"
+

@@ -1,0 +1,78 @@
+<!-- 个人简历区（整合简历内容+苹果风格排版） -->
+<section id="resume" class="py-20 px-4 md:px-8 bg-apple-lightgray">
+    <div class="container mx-auto max-w-5xl">
+        <h2 class="text-3xl md:text-4xl font-bold mb-10 text-center reveal-element">个人简历</h2>
+        
+        <!-- 基本信息 -->
+        <div class="bg-apple-white rounded-2xl p-8 mb-10 shadow-sm reveal-element" data-sr-delay="200">
+            <h3 class="text-2xl font-semibold mb-6 flex items-center">
+                <i class="fa-solid fa-user-circle text-apple-hover mr-3"></i>基本信息
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex items-center">
+                    <span class="w-32 text-apple-gray">姓名：</span>
+                    <span>{{ personal.name }}</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="w-32 text-apple-gray">性别：</span>
+                    <span>{{ personal.gender }}</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="w-32 text-apple-gray">年龄：</span>
+                    <span>{{ personal.age }}岁</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="w-32 text-apple-gray">联系方式：</span>
+                    <span>{{ personal.phone }}</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="w-32 text-apple-gray">求职意向：</span>
+                    <span>{{ personal.job_title }}</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="w-32 text-apple-gray">期望城市：</span>
+                    <span>{{ personal.city }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 教育经历 -->
+        <div class="bg-apple-white rounded-2xl p-8 mb-10 shadow-sm reveal-element" data-sr-delay="300">
+            <h3 class="text-2xl font-semibold mb-6 flex items-center">
+                <i class="fa-solid fa-graduation-cap text-apple-hover mr-3"></i>教育经历
+            </h3>
+            <div class="border-l-2 border-apple-hover pl-6">
+                {% for edu in education %}
+                <div class="mb-4">
+                    <h4 class="font-semibold">{{ edu.school }} | {{ edu.major }} | {{ edu.degree }}</h4>
+                    <p class="text-apple-gray">{{ edu.start_year }} - {{ edu.end_year }}</p>
+                    <p class="mt-2">主修课程：{{ edu.courses | join('、') }}</p>
+                    {% if edu.extra %}
+                    <p class="mt-1">额外经历：{{ edu.extra }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- 实习经历 -->
+        <div class="bg-apple-white rounded-2xl p-8 mb-10 shadow-sm reveal-element" data-sr-delay="400">
+            <h3 class="text-2xl font-semibold mb-6 flex items-center">
+                <i class="fa-solid fa-briefcase text-apple-hover mr-3"></i>实习经历
+            </h3>
+            
+            {% for exp in experiences %}
+            <div class="border-l-2 border-apple-hover pl-6 mb-8">
+                <h4 class="font-semibold">{{ exp.company }} | {{ exp.position }}</h4>
+                <p class="text-apple-gray">{{ exp.start_date }} - {{ exp.end_date }}</p>
+                <ul class="mt-2 list-disc list-inside text-apple-gray space-y-1">
+                    {% for resp in exp.responsibilities %}
+                    <li>{{ resp }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+

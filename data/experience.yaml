@@ -1,0 +1,19 @@
+experiences:
+  - company: "深圳濠森科技有限公司"
+    position: "数据标注"
+    start_date: "2023.08"
+    end_date: "2023.09"
+    type: "实习"
+    responsibilities:
+      - "学习数据标注全流程：接收→预处理→标注→质检→交付"
+      - "掌握图像/文本标注软件，参与图像分类、目标检测项目"
+      - "完成质检与数据交接，保障标注数据质量"
+  
+  - company: "京东运营平台"
+    position: "项目专员/助理"
+    start_date: "2022.06"
+    end_date: "2023.07"
+    type: "实习"
+    responsibilities:
+      - "负责客户信息整合提交、项目资料申购端到端操作"
+

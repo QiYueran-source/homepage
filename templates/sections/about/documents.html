@@ -1,0 +1,150 @@
+<!-- 文档资料区 -->
+<section id="documents" class="py-20 px-4 md:px-8 bg-apple-white">
+    <div class="container mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center reveal-element">文档资料</h2>
+        
+        <!-- 文档分类标签 -->
+        <div class="flex justify-center mb-12 flex-wrap gap-4">
+            <button class="doc-tab active bg-apple-hover text-apple-white px-6 py-2 rounded-full transition-all hover:scale-105" data-category="honors">
+                荣誉奖项
+            </button>
+            <button class="doc-tab border border-apple-gray text-apple-black px-6 py-2 rounded-full transition-all hover:scale-105" data-category="certificates">
+                证书
+            </button>
+            <button class="doc-tab border border-apple-gray text-apple-black px-6 py-2 rounded-full transition-all hover:scale-105" data-category="factor-docs">
+                因子文档
+            </button>
+            <button class="doc-tab border border-apple-gray text-apple-black px-6 py-2 rounded-full transition-all hover:scale-105" data-category="datasets">
+                数据集
+            </button>
+        </div>
+        
+        <!-- 荣誉奖项 -->
+        <div id="documents-honors" class="documents-category">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for honor in honors %}
+                <div class="card-hover bg-apple-card-gradient rounded-xl p-6 text-center reveal-element">
+                    <div class="w-16 h-16 bg-apple-hover rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-trophy text-2xl text-apple-white"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">{{ honor.title }}</h3>
+                    <p class="text-apple-hover mb-2">{{ honor.level }}</p>
+                    <p class="text-apple-gray text-sm mb-4">{{ honor.description }}</p>
+                    <span class="text-xs text-apple-gray">{{ honor.date }}</span>
+                    {% if honor.certificate %}
+                    <div class="mt-4">
+                        <a href="{{ honor.certificate }}" class="inline-block bg-apple-hover text-apple-white px-4 py-2 rounded-full text-sm hover:bg-[#0077ED] transition-colors">
+                            查看证书
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- 证书 -->
+        <div id="documents-certificates" class="documents-category hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for cert in certificates %}
+                <div class="card-hover bg-apple-card-gradient rounded-xl p-6 text-center reveal-element">
+                    <div class="w-16 h-16 bg-apple-hover rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-file-pdf text-2xl text-apple-white"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">{{ cert.name }}</h3>
+                    <p class="text-apple-gray text-sm mb-4">{{ cert.description }}</p>
+                    {% if cert.file %}
+                    <a href="{{ cert.file }}" class="inline-block bg-apple-hover text-apple-white px-4 py-2 rounded-full text-sm hover:bg-[#0077ED] transition-colors">
+                        下载查看
+                    </a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- 因子文档 -->
+        <div id="documents-factor-docs" class="documents-category hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for doc in factor_docs %}
+                <div class="card-hover bg-apple-card-gradient rounded-xl p-6 reveal-element">
+                    <div class="w-16 h-16 bg-apple-hover rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-file-alt text-2xl text-apple-white"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2 text-center">{{ doc.name }}</h3>
+                    <p class="text-apple-gray text-sm mb-4 text-center">{{ doc.description }}</p>
+                    {% if doc.date %}
+                    <p class="text-apple-gray text-xs mb-4 text-center">{{ doc.date }}</p>
+                    {% endif %}
+                    {% if doc.file %}
+                    <div class="text-center">
+                        <a href="{{ doc.file }}" class="inline-block bg-apple-hover text-apple-white px-4 py-2 rounded-full text-sm hover:bg-[#0077ED] transition-colors">
+                            下载查看
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- 数据集 -->
+        <div id="documents-datasets" class="documents-category hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for dataset in datasets %}
+                <div class="card-hover bg-apple-card-gradient rounded-xl p-6 reveal-element">
+                    <div class="w-16 h-16 bg-apple-hover rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-database text-2xl text-apple-white"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2 text-center">{{ dataset.name }}</h3>
+                    <p class="text-apple-gray text-sm mb-2 text-center">{{ dataset.description }}</p>
+                    {% if dataset.size %}
+                    <p class="text-apple-gray text-xs mb-2 text-center">大小: {{ dataset.size }}</p>
+                    {% endif %}
+                    {% if dataset.format %}
+                    <p class="text-apple-gray text-xs mb-4 text-center">格式: {{ dataset.format }}</p>
+                    {% endif %}
+                    {% if dataset.file %}
+                    <div class="text-center">
+                        <a href="{{ dataset.file }}" class="inline-block bg-apple-hover text-apple-white px-4 py-2 rounded-full text-sm hover:bg-[#0077ED] transition-colors">
+                            下载数据集
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+// 文档分类切换功能
+document.addEventListener('DOMContentLoaded', function() {
+    const docTabs = document.querySelectorAll('.doc-tab');
+    const docCategories = document.querySelectorAll('.documents-category');
+    
+    docTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // 更新标签状态
+            docTabs.forEach(t => {
+                t.classList.remove('active', 'bg-apple-hover', 'text-apple-white');
+                t.classList.add('border', 'border-apple-gray', 'text-apple-black');
+            });
+            tab.classList.add('active', 'bg-apple-hover', 'text-apple-white');
+            tab.classList.remove('border', 'border-apple-gray', 'text-apple-black');
+            
+            // 显示对应分类
+            const category = tab.getAttribute('data-category');
+            docCategories.forEach(cat => {
+                cat.classList.add('hidden');
+            });
+            const targetCategory = document.getElementById('documents-' + category);
+            if (targetCategory) {
+                targetCategory.classList.remove('hidden');
+            }
+        });
+    });
+});
+</script>
+
