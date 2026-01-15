@@ -102,8 +102,8 @@ docker-compose down
 # 构建镜像
 docker build -t ltw-website .
 
-# 运行容器
-docker run -d -p 8080:80 --name ltw-website ltw-website
+# 运行容器（注意：容器内端口是 82）
+docker run -d -p 8080:82 --name ltw-website --restart unless-stopped ltw-website
 
 # 查看日志
 docker logs -f ltw-website
@@ -115,6 +115,18 @@ docker stop ltw-website
 docker rm ltw-website
 ```
 
+#### 方式三：使用部署脚本（推荐）
+
+```bash
+# 给脚本添加执行权限
+chmod +x deploy.sh
+
+# 运行部署脚本
+./deploy.sh
+```
+
+脚本会自动处理容器启动和端口映射配置。
+
 ### Docker 配置说明
 
 - **Dockerfile**: 多阶段构建，先使用 Python 构建静态网站，然后使用 Nginx 提供服务
@@ -122,19 +134,35 @@ docker rm ltw-website
 - **docker-compose.yml**: Docker Compose 配置文件，简化部署流程
 - **.dockerignore**: 排除不需要的文件，减小镜像体积
 
+### 服务器部署注意事项
+
+1. **端口映射**：确保使用 `-p 8080:82`（主机端口:容器端口），不要使用 `127.0.0.1` 绑定
+2. **防火墙**：开放服务器防火墙的 8080 端口
+3. **安全组**：在云服务器控制台的安全组中开放 8080 端口的入站规则
+
+**正确的启动命令：**
+```bash
+docker run -d -p 0.0.0.0:8080:82 --name ltw --restart unless-stopped ltw-website
+```
+
+**错误的启动命令（只能本地访问）：**
+```bash
+docker run -d -p 127.0.0.1:82:8080 --name ltw ltw-website  # ❌ 错误
+```
+
 ### 自定义端口
 
 在 `docker-compose.yml` 中修改端口映射：
 
 ```yaml
 ports:
-  - "3000:80"  # 将 3000 改为你想要的端口
+  - "3000:82"  # 将 3000 改为你想要的端口（容器内是 82）
 ```
 
 或使用 Docker 命令：
 
 ```bash
-docker run -d -p 3000:80 --name ltw-website ltw-website
+docker run -d -p 3000:82 --name ltw-website ltw-website
 ```
 
 ## 配置
