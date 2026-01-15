@@ -1,0 +1,13 @@
+paths:
+  data: "data"
+  templates: "templates"
+  dist: "dist"
+  static: "static"
+
+blog:
+  categories_file: "config/category_mapping.yaml"
+  default_image: "https://picsum.photos/seed/{slug}/800/500"
+
+build:
+  encoding: "utf-8"
+  auto_create_dirs: true

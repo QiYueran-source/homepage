@@ -4,45 +4,130 @@
         <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center reveal-element">我的博文</h2>
         
         <!-- 分类标签 -->
-        <div class="flex justify-center mb-12 flex-wrap gap-4">
-            <button class="blog-tab active bg-apple-hover text-apple-white px-6 py-2 rounded-full transition-all hover:scale-105" data-category="tech-notes">
-                技术笔记
+        <div class="flex justify-center mb-12 flex-wrap gap-4" id="blog-tabs">
+            <button class="blog-tab active bg-apple-hover text-apple-white px-6 py-2 rounded-full transition-all hover:scale-105" data-category="all">
+                全部
             </button>
-            <button class="blog-tab border border-apple-gray text-apple-black px-6 py-2 rounded-full transition-all hover:scale-105" data-category="finance">
-                经济金融
+            {% for category in categories %}
+            <button class="blog-tab border border-apple-gray text-apple-black px-6 py-2 rounded-full transition-all hover:scale-105" data-category="{{ category }}">
+                {{ category_name_mapping.get(category, category) }}
             </button>
-            <button class="blog-tab border border-apple-gray text-apple-black px-6 py-2 rounded-full transition-all hover:scale-105" data-category="essays">
-                个人随想
-            </button>
+            {% endfor %}
         </div>
         
         <!-- 文章网格 -->
         <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for article in articles %}
-            <div class="card-hover bg-apple-card-gradient rounded-xl overflow-hidden reveal-element" data-sr-delay="{{ loop.index0 * 200 }}">
+            <div class="blog-article card-hover bg-apple-card-gradient rounded-xl overflow-hidden reveal-element" 
+                 data-category="{{ article.category }}" 
+                 data-sr-delay="{{ loop.index0 * 200 }}">
                 <img src="{{ article.image }}" alt="{{ article.title }}" class="w-full h-60 object-cover">
                 <div class="p-6">
-                    <span class="text-apple-gray text-sm">{{ article.date }}</span>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-apple-gray text-sm">{{ article.date }}</span>
+                        <span class="text-xs text-apple-gray bg-apple-lightgray px-2 py-1 rounded">{{ article.category_name }}</span>
+                    </div>
                     <h3 class="text-xl font-semibold mt-2 mb-3 hover:text-apple-hover transition-colors">
-                        <a href="#">{{ article.title }}</a>
+                        <a href="{{ article.url }}">{{ article.title }}</a>
                     </h3>
-                    <p class="text-apple-gray mb-4">
+                    <p class="text-apple-gray mb-4 line-clamp-3">
                         {{ article.excerpt }}
                     </p>
-                    <a href="#" class="text-apple-hover font-medium flex items-center">
-                        阅读全文 <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                    <a href="{{ article.url }}" class="text-apple-hover font-medium flex items-center group">
+                        阅读全文 <i class="fa-solid fa-arrow-right ml-2 text-sm group-hover:translate-x-1 transition-transform"></i>
                     </a>
                 </div>
             </div>
             {% endfor %}
         </div>
-
-        <!-- 加载更多按钮 -->
-        <div class="text-center mt-12 reveal-element" data-sr-delay="600">
-            <button class="border border-apple-gray text-apple-black px-8 py-3 rounded-full hover:bg-apple-lightgray transition-all hover:scale-105">
-                加载更多 <i class="fa-solid fa-chevron-down ml-2"></i>
-            </button>
+        
+        <!-- 无文章提示 -->
+        <div id="no-articles" class="hidden text-center py-12">
+            <i class="fa-solid fa-inbox text-4xl text-apple-gray mb-4"></i>
+            <p class="text-apple-gray">该分类下暂无文章</p>
         </div>
+
     </div>
 </section>
+
+<script>
+// 博客分类筛选功能
+document.addEventListener('DOMContentLoaded', function() {
+    const blogTabs = document.querySelectorAll('.blog-tab');
+    const blogArticles = document.querySelectorAll('.blog-article');
+    const blogGrid = document.getElementById('blog-grid');
+    const noArticles = document.getElementById('no-articles');
+    
+    // 从 URL 参数获取分类（如果有）
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryFromUrl = urlParams.get('category');
+    
+    // 分类切换函数
+    function filterArticles(category) {
+        let visibleCount = 0;
+        
+        blogArticles.forEach(article => {
+            const articleCategory = article.getAttribute('data-category');
+            const shouldShow = category === 'all' || articleCategory === category;
+            
+            if (shouldShow) {
+                article.style.display = 'block';
+                visibleCount++;
+                // 添加淡入动画
+                article.style.opacity = '0';
+                setTimeout(() => {
+                    article.style.transition = 'opacity 0.3s ease';
+                    article.style.opacity = '1';
+                }, 10);
+            } else {
+                article.style.display = 'none';
+            }
+        });
+        
+        // 显示/隐藏"无文章"提示
+        if (visibleCount === 0) {
+            noArticles.classList.remove('hidden');
+            blogGrid.classList.add('hidden');
+        } else {
+            noArticles.classList.add('hidden');
+            blogGrid.classList.remove('hidden');
+        }
+        
+        // 更新 URL（不刷新页面）
+        if (category === 'all') {
+            window.history.replaceState({}, '', window.location.pathname + window.location.hash);
+        } else {
+            window.history.replaceState({}, '', window.location.pathname + '?category=' + category + window.location.hash);
+        }
+    }
+    
+    // 更新标签状态
+    function updateTabState(activeCategory) {
+        blogTabs.forEach(tab => {
+            const tabCategory = tab.getAttribute('data-category');
+            if (tabCategory === activeCategory) {
+                tab.classList.add('active', 'bg-apple-hover', 'text-apple-white');
+                tab.classList.remove('border', 'border-apple-gray', 'text-apple-black');
+            } else {
+                tab.classList.remove('active', 'bg-apple-hover', 'text-apple-white');
+                tab.classList.add('border', 'border-apple-gray', 'text-apple-black');
+            }
+        });
+    }
+    
+    // 绑定标签点击事件
+    blogTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const category = this.getAttribute('data-category');
+            filterArticles(category);
+            updateTabState(category);
+        });
+    });
+    
+    // 初始化：如果有 URL 参数，使用它；否则使用"全部"
+    const initialCategory = categoryFromUrl || 'all';
+    filterArticles(initialCategory);
+    updateTabState(initialCategory);
+});
+</script>
 

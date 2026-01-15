@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python数据处理：从基础到实战 | 梁庭威</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- 自定义Tailwind配置（现代博客风格配色） -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        blog: {
+                            bg: '#FFFFFF',
+                            bgAlt: '#FAFAFA',
+                            text: '#1A1A1A',
+                            textLight: '#6B7280',
+                            textLighter: '#9CA3AF',
+                            border: '#E5E7EB',
+                            accent: '#2563EB',
+                            accentHover: '#1D4ED8',
+                            accentLight: '#DBEAFE'
+                        }
+                    },
+                    fontFamily: {
+                        blog: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- 自定义样式（现代博客风格） -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            body {
+                line-height: 1.75;
+                letter-spacing: -0.01em;
+            }
+            
+            /* 文章内容样式 */
+            .article-content {
+                @apply text-blog-text leading-relaxed;
+            }
+            .article-content h1,
+            .article-content h2,
+            .article-content h3,
+            .article-content h4 {
+                @apply font-bold mt-8 mb-4 text-blog-text;
+            }
+            .article-content h1 {
+                @apply text-3xl;
+            }
+            .article-content h2 {
+                @apply text-2xl;
+            }
+            .article-content h3 {
+                @apply text-xl;
+            }
+            .article-content p {
+                @apply mb-4;
+            }
+            .article-content ul,
+            .article-content ol {
+                @apply mb-4 ml-6;
+            }
+            .article-content li {
+                @apply mb-2;
+            }
+            .article-content code {
+                @apply bg-blog-bgAlt px-1.5 py-0.5 rounded text-sm font-mono;
+            }
+            .article-content pre {
+                @apply bg-blog-bgAlt p-4 rounded-lg overflow-x-auto mb-4;
+            }
+            .article-content pre code {
+                @apply bg-transparent p-0;
+            }
+            .article-content blockquote {
+                @apply border-l-4 border-blog-accent pl-4 italic text-blog-textLight my-4;
+            }
+            .article-content a {
+                @apply text-blog-accent hover:text-blog-accentHover underline;
+            }
+            .article-content img {
+                @apply rounded-lg my-6 w-full;
+            }
+        }
+    </style>
+</head>
+
+<body class="font-blog bg-blog-bg text-blog-text antialiased">
+    <!-- 顶部导航栏 -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-blog-border shadow-sm">
+        <div class="container mx-auto px-4 md:px-8 py-4 max-w-4xl">
+            <div class="flex justify-between items-center">
+                <a href="../index.html#blog" class="text-base font-medium text-blog-text hover:text-blog-accent transition-colors flex items-center group">
+                    <i class="fa-solid fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i>返回博客
+                </a>
+                <div class="text-sm text-blog-textLight font-medium">
+                    tech-notes
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 文章头部 -->
+    <header class="container mx-auto px-4 md:px-8 py-12 max-w-3xl">
+        <div class="mb-6">
+            <a href="../index.html#blog" class="text-sm text-blog-textLight hover:text-blog-accent transition-colors inline-flex items-center">
+                <i class="fa-solid fa-home mr-2"></i>首页
+            </a>
+            <span class="mx-2 text-blog-textLighter">/</span>
+            <a href="../index.html#blog" class="text-sm text-blog-textLight hover:text-blog-accent transition-colors">博客</a>
+            <span class="mx-2 text-blog-textLighter">/</span>
+            <span class="text-sm text-blog-textLight">技术笔记</span>
+        </div>
+        
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 text-blog-text tracking-tight">Python数据处理：从基础到实战</h1>
+        
+        <div class="flex flex-wrap items-center gap-4 text-sm text-blog-textLight mb-8">
+            <span class="flex items-center">
+                <i class="fa-solid fa-calendar mr-2"></i>2025.01.05
+            </span>
+            <span class="text-blog-border">|</span>
+            <span class="flex items-center">
+                <i class="fa-solid fa-folder mr-2"></i>技术笔记
+            </span>
+            
+        </div>
+        
+        
+        <img src="https://picsum.photos/seed/python3/800/500" alt="Python数据处理：从基础到实战" class="w-full h-64 md:h-96 object-cover rounded-lg mb-8">
+        
+    </header>
+
+    <!-- 文章内容 -->
+    <main class="container mx-auto px-4 md:px-8 pb-16 max-w-3xl">
+        <article class="article-content">
+            <h1>Python数据处理：从基础到实战</h1>
+<p>Python作为数据处理的首选语言，提供了丰富的工具和库。</p>
+<h2>核心库</h2>
+<h3>Pandas</h3>
+<p>用于数据清洗、转换和分析。</p>
+<h3>NumPy</h3>
+<p>提供高效的数值计算能力。</p>
+<h3>Matplotlib/Seaborn</h3>
+<p>用于数据可视化。</p>
+<h2>实践案例</h2>
+<p>通过实际项目，学习了如何高效处理大规模数据集。</p>
+<h2>总结</h2>
+<p>Python数据处理能力是数据科学的基础，需要不断学习和实践。</p>
+        </article>
+        
+        <!-- 文章导航 -->
+        <div class="mt-16 pt-8 border-t border-blog-border">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <a href="/blog/data-annotation.html" class="group p-4 bg-blog-bgAlt rounded-lg hover:bg-blog-accentLight transition-colors">
+                    <div class="text-xs text-blog-textLighter mb-2">
+                        <i class="fa-solid fa-arrow-left mr-1"></i>上一篇
+                    </div>
+                    <div class="font-medium text-blog-text group-hover:text-blog-accent transition-colors">
+                        数据标注实战：图像分类与目标检测
+                    </div>
+                </a>
+                
+                
+                
+            </div>
+        </div>
+        
+        <!-- 返回顶部 -->
+        <div class="mt-12 text-center">
+            <a href="../index.html#blog" class="inline-flex items-center text-blog-accent hover:text-blog-accentHover transition-colors">
+                <i class="fa-solid fa-arrow-left mr-2"></i>返回博客列表
+            </a>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="border-t border-blog-border bg-blog-bgAlt py-12 mt-20">
+        <div class="container mx-auto px-4 md:px-8 text-center max-w-3xl">
+            <p class="text-sm text-blog-textLight mb-2">© 2025 梁庭威 | 个人博客</p>
+            <p class="text-sm text-blog-textLighter">数据驱动 · 极简 · 成长</p>
+        </div>
+    </footer>
+</body>
+</html>

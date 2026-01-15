@@ -1,0 +1,36 @@
+{
+  "articles": [
+    {
+      "title": "多模型集成学习：香烟销量预测实践",
+      "date": "2025.02.15",
+      "category": "tech-notes",
+      "slug": "integrated-learning",
+      "url": "/blog/integrated-learning.html",
+      "excerpt": "结合ARIMA、LSTM、Prophet和XGBoost模型，用线性回归做元学习器，提升预测精度...",
+      "image": "https://picsum.photos/seed/python1/800/500"
+    },
+    {
+      "title": "数据标注实战：图像分类与目标检测",
+      "date": "2025.01.20",
+      "category": "tech-notes",
+      "slug": "data-annotation",
+      "url": "/blog/data-annotation.html",
+      "excerpt": "分享深圳濠森科技实习经历，掌握数据标注全流程及各类标注工具使用技巧...",
+      "image": "https://picsum.photos/seed/python2/800/500"
+    },
+    {
+      "title": "Python数据处理：从基础到实战",
+      "date": "2025.01.05",
+      "category": "tech-notes",
+      "slug": "python-data-processing",
+      "url": "/blog/python-data-processing.html",
+      "excerpt": "结合计算机网络、数据结构知识，高效组织和操作各类数据类型及复杂数据关系...",
+      "image": "https://picsum.photos/seed/python3/800/500"
+    }
+  ],
+  "categories": [
+    "essays",
+    "finance",
+    "tech-notes"
+  ]
+}

@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>梁庭威 | Python技术博客</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- 引入ScrollReveal实现苹果风格滚动渐显动画 -->
+    <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
+    
+    <!-- 自定义Tailwind配置（苹果官网配色+新增渐变） -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // 苹果官网核心配色
+                        apple: {
+                            black: '#1D1D1F',
+                            white: '#FFFFFF',
+                            gray: '#86868B',
+                            lightgray: '#F5F5F7',
+                            hover: '#0071E3', // 苹果交互主色
+                            gradient: '#E8E8ED' // 渐变辅助色
+                        }
+                    },
+                    fontFamily: {
+                        // 苹果San Francisco字体替代
+                        sf: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif']
+                    },
+                    backgroundImage: {
+                        // 苹果风格渐变背景
+                        'apple-gradient': 'linear-gradient(180deg, #F5F5F7 0%, #E8E8ED 100%)',
+                        'apple-card-gradient': 'linear-gradient(145deg, #FFFFFF 0%, #F8F8FA 100%)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- 自定义样式（苹果风格+动画） -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            /* 苹果风格平滑滚动 */
+            .scroll-smooth {
+                scroll-behavior: smooth;
+            }
+            /* 导航栏滚动渐变效果（苹果磨砂玻璃） */
+            .nav-scrolled {
+                background-color: rgba(255, 255, 255, 0.85);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                box-shadow: 0 1px 8px rgba(0, 0, 0, 0.03);
+            }
+            /* 苹果风格卡片hover微动效（3D+阴影） */
+            .card-hover {
+                transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+                transform-style: preserve-3d;
+            }
+            .card-hover:hover {
+                transform: translateY(-6px) rotateX(2deg) rotateY(1deg);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+            }
+            /* 苹果风格文字渐变 */
+            .text-gradient {
+                background: linear-gradient(90deg, #1D1D1F 0%, #0071E3 100%);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+            }
+            /* 背景缓慢平移动画（苹果官网动态背景效果） */
+            .bg-animate {
+                background-position: 0 0;
+                animation: bgMove 20s ease infinite alternate;
+            }
+            @keyframes bgMove {
+                0% { background-position: 0 0; }
+                100% { background-position: 0 -20px; }
+            }
+            /* 下拉菜单样式 */
+            .dropdown:hover .dropdown-menu {
+                display: block;
+            }
+            .dropdown-menu {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body class="font-sf bg-apple-lightgray text-apple-black scroll-smooth bg-animate bg-apple-gradient">
+    <!-- 顶部导航栏（苹果磨砂玻璃+固定） -->
+<nav id="main-nav" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 py-4">
+    <div class="container mx-auto px-4 md:px-8 flex justify-between items-center">
+        <!-- 博客LOGO（个性化） -->
+        <a href="#home" class="text-xl font-medium text-apple-black hover:text-apple-hover transition-colors">
+            <i class="fa-solid fa-code mr-2"></i>梁庭威 | Python博客
+        </a>
+        
+        <!-- 桌面端导航菜单 -->
+        <div class="hidden md:flex space-x-8 items-center">
+            <a href="#home" class="text-apple-black hover:text-apple-hover transition-colors">首页</a>
+            
+            <!-- 博文下拉菜单 -->
+            <div class="dropdown relative">
+                <a href="#blog" class="text-apple-black hover:text-apple-hover transition-colors flex items-center">
+                    博文 <i class="fa-solid fa-chevron-down ml-1 text-xs"></i>
+                </a>
+                <div class="dropdown-menu absolute top-full left-0 mt-2 bg-apple-white rounded-lg shadow-lg py-2 min-w-[150px]">
+                    <a href="#blog" data-category="tech-notes" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors">技术笔记</a>
+                    <a href="#blog" data-category="finance" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors">经济金融</a>
+                    <a href="#blog" data-category="essays" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors">个人随想</a>
+                </div>
+            </div>
+            
+            <!-- 关于我下拉菜单 -->
+            <div class="dropdown relative">
+                <a href="#about" class="text-apple-black hover:text-apple-hover transition-colors flex items-center">
+                    关于我 <i class="fa-solid fa-chevron-down ml-1 text-xs"></i>
+                </a>
+                <div class="dropdown-menu absolute top-full left-0 mt-2 bg-apple-white rounded-lg shadow-lg py-2 min-w-[180px]">
+                    <a href="resume.html" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors">个人简历</a>
+                    <a href="#projects" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors">项目经历</a>
+                    <a href="#tech-stack" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors">技术栈</a>
+                    <div class="relative dropdown-submenu">
+                        <a href="#documents" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors flex items-center justify-between">
+                            文档资料 <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </a>
+                        <div class="dropdown-menu absolute left-full top-0 ml-2 bg-apple-white rounded-lg shadow-lg py-2 min-w-[150px]">
+                            <a href="#documents" data-category="honors" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors">荣誉奖项</a>
+                            <a href="#documents" data-category="certificates" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors">证书</a>
+                            <a href="#documents" data-category="factor-docs" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors">因子文档</a>
+                            <a href="#documents" data-category="datasets" class="block px-4 py-2 text-apple-black hover:bg-apple-lightgray transition-colors">数据集</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="#contact" class="text-apple-black hover:text-apple-hover transition-colors">联系我</a>
+        </div>
+        
+        <!-- 移动端汉堡菜单 -->
+        <button id="menu-btn" class="md:hidden text-apple-black text-xl">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </div>
+    
+    <!-- 移动端菜单（默认隐藏） -->
+    <div id="mobile-menu" class="md:hidden hidden bg-apple-white absolute top-full left-0 w-full py-4 shadow-md backdrop-blur-md">
+        <div class="container mx-auto px-4 flex flex-col space-y-4">
+            <a href="#home" class="text-apple-black hover:text-apple-hover transition-colors py-2">首页</a>
+            <div class="pl-4 border-l-2 border-apple-lightgray">
+                <a href="#blog" class="text-apple-black hover:text-apple-hover transition-colors py-2 block font-medium">博文</a>
+                <a href="#blog" data-category="tech-notes" class="text-apple-gray hover:text-apple-hover transition-colors py-2 block pl-4">技术笔记</a>
+                <a href="#blog" data-category="finance" class="text-apple-gray hover:text-apple-hover transition-colors py-2 block pl-4">经济金融</a>
+                <a href="#blog" data-category="essays" class="text-apple-gray hover:text-apple-hover transition-colors py-2 block pl-4">个人随想</a>
+            </div>
+            <div class="pl-4 border-l-2 border-apple-lightgray">
+                <a href="#about" class="text-apple-black hover:text-apple-hover transition-colors py-2 block font-medium">关于我</a>
+                <a href="resume.html" class="text-apple-gray hover:text-apple-hover transition-colors py-2 block pl-4">个人简历</a>
+                <a href="#projects" class="text-apple-gray hover:text-apple-hover transition-colors py-2 block pl-4">项目经历</a>
+                <a href="#tech-stack" class="text-apple-gray hover:text-apple-hover transition-colors py-2 block pl-4">技术栈</a>
+                <a href="#documents" class="text-apple-gray hover:text-apple-hover transition-colors py-2 block pl-4">文档资料</a>
+            </div>
+            <a href="#contact" class="text-apple-black hover:text-apple-hover transition-colors py-2">联系我</a>
+        </div>
+    </div>
+</nav>
+
+    
+    
+    <!-- Hero区域（苹果全屏+渐变文字+动画） -->
+<section id="home" class="pt-32 pb-20 md:pt-40 md:pb-32 px-4 md:px-8 min-h-[80vh] flex items-center">
+    <div class="container mx-auto text-center">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight reveal-element">
+            <span class="text-gradient">数据驱动 · Python实践</span>
+        </h1>
+        <p class="text-xl md:text-2xl text-apple-gray max-w-3xl mx-auto mb-10 reveal-element" data-sr-delay="200">
+            专注数据处理、机器学习与Python开发，用代码解决实际问题
+        </p>
+        <a href="resume.html" class="inline-block bg-apple-hover text-apple-white px-8 py-3 rounded-full text-lg hover:bg-[#0077ED] transition-all transform hover:scale-105 reveal-element" data-sr-delay="400">
+            查看我的简历 <i class="fa-solid fa-arrow-right ml-2"></i>
+        </a>
+    </div>
+</section>
+
+    <!-- 博文区（苹果风格卡片+分类切换） -->
+<section id="blog" class="py-20 px-4 md:px-8 bg-apple-white">
+    <div class="container mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center reveal-element">我的博文</h2>
+        
+        <!-- 分类标签 -->
+        <div class="flex justify-center mb-12 flex-wrap gap-4" id="blog-tabs">
+            <button class="blog-tab active bg-apple-hover text-apple-white px-6 py-2 rounded-full transition-all hover:scale-105" data-category="all">
+                全部
+            </button>
+            
+            <button class="blog-tab border border-apple-gray text-apple-black px-6 py-2 rounded-full transition-all hover:scale-105" data-category="essays">
+                个人随想
+            </button>
+            
+            <button class="blog-tab border border-apple-gray text-apple-black px-6 py-2 rounded-full transition-all hover:scale-105" data-category="finance">
+                经济金融
+            </button>
+            
+            <button class="blog-tab border border-apple-gray text-apple-black px-6 py-2 rounded-full transition-all hover:scale-105" data-category="tech-notes">
+                技术笔记
+            </button>
+            
+        </div>
+        
+        <!-- 文章网格 -->
+        <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <div class="blog-article card-hover bg-apple-card-gradient rounded-xl overflow-hidden reveal-element" 
+                 data-category="tech-notes" 
+                 data-sr-delay="0">
+                <img src="https://picsum.photos/seed/python1/800/500" alt="多模型集成学习：香烟销量预测实践" class="w-full h-60 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-apple-gray text-sm">2025.02.15</span>
+                        <span class="text-xs text-apple-gray bg-apple-lightgray px-2 py-1 rounded">技术笔记</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mt-2 mb-3 hover:text-apple-hover transition-colors">
+                        <a href="/blog/integrated-learning.html">多模型集成学习：香烟销量预测实践</a>
+                    </h3>
+                    <p class="text-apple-gray mb-4 line-clamp-3">
+                        结合ARIMA、LSTM、Prophet和XGBoost模型，用线性回归做元学习器，提升预测精度...
+                    </p>
+                    <a href="/blog/integrated-learning.html" class="text-apple-hover font-medium flex items-center group">
+                        阅读全文 <i class="fa-solid fa-arrow-right ml-2 text-sm group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="blog-article card-hover bg-apple-card-gradient rounded-xl overflow-hidden reveal-element" 
+                 data-category="tech-notes" 
+                 data-sr-delay="200">
+                <img src="https://picsum.photos/seed/python2/800/500" alt="数据标注实战：图像分类与目标检测" class="w-full h-60 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-apple-gray text-sm">2025.01.20</span>
+                        <span class="text-xs text-apple-gray bg-apple-lightgray px-2 py-1 rounded">技术笔记</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mt-2 mb-3 hover:text-apple-hover transition-colors">
+                        <a href="/blog/data-annotation.html">数据标注实战：图像分类与目标检测</a>
+                    </h3>
+                    <p class="text-apple-gray mb-4 line-clamp-3">
+                        分享深圳濠森科技实习经历，掌握数据标注全流程及各类标注工具使用技巧...
+                    </p>
+                    <a href="/blog/data-annotation.html" class="text-apple-hover font-medium flex items-center group">
+                        阅读全文 <i class="fa-solid fa-arrow-right ml-2 text-sm group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="blog-article card-hover bg-apple-card-gradient rounded-xl overflow-hidden reveal-element" 
+                 data-category="tech-notes" 
+                 data-sr-delay="400">
+                <img src="https://picsum.photos/seed/python3/800/500" alt="Python数据处理：从基础到实战" class="w-full h-60 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-apple-gray text-sm">2025.01.05</span>
+                        <span class="text-xs text-apple-gray bg-apple-lightgray px-2 py-1 rounded">技术笔记</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mt-2 mb-3 hover:text-apple-hover transition-colors">
+                        <a href="/blog/python-data-processing.html">Python数据处理：从基础到实战</a>
+                    </h3>
+                    <p class="text-apple-gray mb-4 line-clamp-3">
+                        结合计算机网络、数据结构知识，高效组织和操作各类数据类型及复杂数据关系...
+                    </p>
+                    <a href="/blog/python-data-processing.html" class="text-apple-hover font-medium flex items-center group">
+                        阅读全文 <i class="fa-solid fa-arrow-right ml-2 text-sm group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- 无文章提示 -->
+        <div id="no-articles" class="hidden text-center py-12">
+            <i class="fa-solid fa-inbox text-4xl text-apple-gray mb-4"></i>
+            <p class="text-apple-gray">该分类下暂无文章</p>
+        </div>
+
+    </div>
+</section>
+
+<script>
+// 博客分类筛选功能
+document.addEventListener('DOMContentLoaded', function() {
+    const blogTabs = document.querySelectorAll('.blog-tab');
+    const blogArticles = document.querySelectorAll('.blog-article');
+    const blogGrid = document.getElementById('blog-grid');
+    const noArticles = document.getElementById('no-articles');
+    
+    // 从 URL 参数获取分类（如果有）
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryFromUrl = urlParams.get('category');
+    
+    // 分类切换函数
+    function filterArticles(category) {
+        let visibleCount = 0;
+        
+        blogArticles.forEach(article => {
+            const articleCategory = article.getAttribute('data-category');
+            const shouldShow = category === 'all' || articleCategory === category;
+            
+            if (shouldShow) {
+                article.style.display = 'block';
+                visibleCount++;
+                // 添加淡入动画
+                article.style.opacity = '0';
+                setTimeout(() => {
+                    article.style.transition = 'opacity 0.3s ease';
+                    article.style.opacity = '1';
+                }, 10);
+            } else {
+                article.style.display = 'none';
+            }
+        });
+        
+        // 显示/隐藏"无文章"提示
+        if (visibleCount === 0) {
+            noArticles.classList.remove('hidden');
+            blogGrid.classList.add('hidden');
+        } else {
+            noArticles.classList.add('hidden');
+            blogGrid.classList.remove('hidden');
+        }
+        
+        // 更新 URL（不刷新页面）
+        if (category === 'all') {
+            window.history.replaceState({}, '', window.location.pathname + window.location.hash);
+        } else {
+            window.history.replaceState({}, '', window.location.pathname + '?category=' + category + window.location.hash);
+        }
+    }
+    
+    // 更新标签状态
+    function updateTabState(activeCategory) {
+        blogTabs.forEach(tab => {
+            const tabCategory = tab.getAttribute('data-category');
+            if (tabCategory === activeCategory) {
+                tab.classList.add('active', 'bg-apple-hover', 'text-apple-white');
+                tab.classList.remove('border', 'border-apple-gray', 'text-apple-black');
+            } else {
+                tab.classList.remove('active', 'bg-apple-hover', 'text-apple-white');
+                tab.classList.add('border', 'border-apple-gray', 'text-apple-black');
+            }
+        });
+    }
+    
+    // 绑定标签点击事件
+    blogTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const category = this.getAttribute('data-category');
+            filterArticles(category);
+            updateTabState(category);
+        });
+    });
+    
+    // 初始化：如果有 URL 参数，使用它；否则使用"全部"
+    const initialCategory = categoryFromUrl || 'all';
+    filterArticles(initialCategory);
+    updateTabState(initialCategory);
+});
+</script>
+
+    <div id="about">
+        <!-- 项目经历区 -->
+<section id="projects" class="py-20 px-4 md:px-8 bg-apple-white">
+    <div class="container mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center reveal-element">项目经历</h2>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <div class="card-hover bg-apple-card-gradient rounded-xl overflow-hidden reveal-element" data-sr-delay="0">
+                
+                <img src="https://picsum.photos/seed/project1/800/500" alt="香烟销量和销售额预测" class="w-full h-48 object-cover">
+                
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-xl font-semibold">香烟销量和销售额预测</h3>
+                            
+                            <p class="text-apple-gray text-sm mt-1">多模型集成学习</p>
+                            
+                        </div>
+                        <span class="text-apple-gray text-sm">2024.12 - 2025.02</span>
+                    </div>
+                    
+                    <p class="text-apple-hover text-sm mb-3">
+                        <i class="fa-solid fa-trophy mr-1"></i>钉钉杯数模比赛三等奖
+                    </p>
+                    
+                    <p class="text-apple-gray mb-4">基于多模型集成学习的销量预测系统，结合ARIMA、LSTM、Prophet和XGBoost模型</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        
+                        <span class="bg-apple-lightgray px-3 py-1 rounded-full text-sm">Python</span>
+                        
+                        <span class="bg-apple-lightgray px-3 py-1 rounded-full text-sm">机器学习</span>
+                        
+                        <span class="bg-apple-lightgray px-3 py-1 rounded-full text-sm">时间序列分析</span>
+                        
+                        <span class="bg-apple-lightgray px-3 py-1 rounded-full text-sm">ARIMA</span>
+                        
+                        <span class="bg-apple-lightgray px-3 py-1 rounded-full text-sm">LSTM</span>
+                        
+                        <span class="bg-apple-lightgray px-3 py-1 rounded-full text-sm">Prophet</span>
+                        
+                        <span class="bg-apple-lightgray px-3 py-1 rounded-full text-sm">XGBoost</span>
+                        
+                    </div>
+                    
+                    <ul class="list-disc list-inside text-apple-gray text-sm mb-4 space-y-1">
+                        
+                        <li>预处理销售数据，处理异常值和缺失值保障数据质量</li>
+                        
+                        <li>应用ARIMA、LSTM、Prophet、XGBoost模型进行预测</li>
+                        
+                        <li>线性回归作为元学习器集成模型，提升预测精度</li>
+                        
+                    </ul>
+                    
+                    <div class="flex space-x-4">
+                        
+                        <a href="#" class="text-apple-hover font-medium hover:underline">
+                            <i class="fa-brands fa-github mr-1"></i>GitHub
+                        </a>
+                        
+                        
+                        <a href="#" class="text-apple-hover font-medium hover:underline">
+                            <i class="fa-solid fa-external-link mr-1"></i>演示
+                        </a>
+                        
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+        <!-- 技术栈区 -->
+<section id="tech-stack" class="py-20 px-4 md:px-8 bg-apple-lightgray">
+    <div class="container mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center reveal-element">技术栈</h2>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            
+            <div class="text-center card-hover bg-apple-card-gradient rounded-xl p-6 reveal-element" data-sr-delay="0">
+                <div class="w-16 h-16 bg-apple-hover rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-brands fa-python text-2xl text-apple-white"></i>
+                </div>
+                <h3 class="font-semibold mb-2">Python</h3>
+                <p class="text-apple-gray text-sm mb-2">数据分析、机器学习、Web开发</p>
+                <div class="flex justify-center mb-2">
+                    
+                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">熟练</span>
+                    
+                </div>
+                <p class="text-apple-gray text-xs">3年+</p>
+            </div>
+            
+            <div class="text-center card-hover bg-apple-card-gradient rounded-xl p-6 reveal-element" data-sr-delay="100">
+                <div class="w-16 h-16 bg-apple-hover rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-brain text-2xl text-apple-white"></i>
+                </div>
+                <h3 class="font-semibold mb-2">机器学习</h3>
+                <p class="text-apple-gray text-sm mb-2">监督学习、无监督学习、深度学习</p>
+                <div class="flex justify-center mb-2">
+                    
+                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">熟练</span>
+                    
+                </div>
+                <p class="text-apple-gray text-xs">2年+</p>
+            </div>
+            
+            <div class="text-center card-hover bg-apple-card-gradient rounded-xl p-6 reveal-element" data-sr-delay="200">
+                <div class="w-16 h-16 bg-apple-hover rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-chart-line text-2xl text-apple-white"></i>
+                </div>
+                <h3 class="font-semibold mb-2">数据分析</h3>
+                <p class="text-apple-gray text-sm mb-2">Pandas、NumPy、数据清洗与可视化</p>
+                <div class="flex justify-center mb-2">
+                    
+                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">熟练</span>
+                    
+                </div>
+                <p class="text-apple-gray text-xs">2年+</p>
+            </div>
+            
+            <div class="text-center card-hover bg-apple-card-gradient rounded-xl p-6 reveal-element" data-sr-delay="300">
+                <div class="w-16 h-16 bg-apple-hover rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-sitemap text-2xl text-apple-white"></i>
+                </div>
+                <h3 class="font-semibold mb-2">数据结构</h3>
+                <p class="text-apple-gray text-sm mb-2">高效的数据组织、存储和操作能力</p>
+                <div class="flex justify-center mb-2">
+                    
+                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">熟练</span>
+                    
+                </div>
+                <p class="text-apple-gray text-xs">3年+</p>
+            </div>
+            
+            <div class="text-center card-hover bg-apple-card-gradient rounded-xl p-6 reveal-element" data-sr-delay="400">
+                <div class="w-16 h-16 bg-apple-hover rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-network-wired text-2xl text-apple-white"></i>
+                </div>
+                <h3 class="font-semibold mb-2">计算机网络</h3>
+                <p class="text-apple-gray text-sm mb-2">网络协议和数据传输原理</p>
+                <div class="flex justify-center mb-2">
+                    
+                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">熟练</span>
+                    
+                </div>
+                <p class="text-apple-gray text-xs">2年+</p>
+            </div>
+            
+            <div class="text-center card-hover bg-apple-card-gradient rounded-xl p-6 reveal-element" data-sr-delay="500">
+                <div class="w-16 h-16 bg-apple-hover rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-server text-2xl text-apple-white"></i>
+                </div>
+                <h3 class="font-semibold mb-2">系统管理</h3>
+                <p class="text-apple-gray text-sm mb-2">进程/内存管理及文件系统核心概念</p>
+                <div class="flex justify-center mb-2">
+                    
+                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">熟练</span>
+                    
+                </div>
+                <p class="text-apple-gray text-xs">2年+</p>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+        <!-- 文档资料区 -->
+<section id="documents" class="py-20 px-4 md:px-8 bg-apple-white">
+    <div class="container mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-16 text-center reveal-element">文档资料</h2>
+        
+        <!-- 文档分类标签 -->
+        <div class="flex justify-center mb-12 flex-wrap gap-4">
+            <button class="doc-tab active bg-apple-hover text-apple-white px-6 py-2 rounded-full transition-all hover:scale-105" data-category="honors">
+                荣誉奖项
+            </button>
+            <button class="doc-tab border border-apple-gray text-apple-black px-6 py-2 rounded-full transition-all hover:scale-105" data-category="certificates">
+                证书
+            </button>
+            <button class="doc-tab border border-apple-gray text-apple-black px-6 py-2 rounded-full transition-all hover:scale-105" data-category="factor-docs">
+                因子文档
+            </button>
+            <button class="doc-tab border border-apple-gray text-apple-black px-6 py-2 rounded-full transition-all hover:scale-105" data-category="datasets">
+                数据集
+            </button>
+        </div>
+        
+        <!-- 荣誉奖项 -->
+        <div id="documents-honors" class="documents-category">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <div class="card-hover bg-apple-card-gradient rounded-xl p-6 text-center reveal-element">
+                    <div class="w-16 h-16 bg-apple-hover rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-trophy text-2xl text-apple-white"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">钉钉杯数学建模比赛</h3>
+                    <p class="text-apple-hover mb-2">三等奖</p>
+                    <p class="text-apple-gray text-sm mb-4">省级数学建模竞赛</p>
+                    <span class="text-xs text-apple-gray">2025.02</span>
+                    
+                    <div class="mt-4">
+                        <a href="#" class="inline-block bg-apple-hover text-apple-white px-4 py-2 rounded-full text-sm hover:bg-[#0077ED] transition-colors">
+                            查看证书
+                        </a>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- 证书 -->
+        <div id="documents-certificates" class="documents-category hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <div class="card-hover bg-apple-card-gradient rounded-xl p-6 text-center reveal-element">
+                    <div class="w-16 h-16 bg-apple-hover rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-file-pdf text-2xl text-apple-white"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">驾驶证C1</h3>
+                    <p class="text-apple-gray text-sm mb-4">机动车驾驶证</p>
+                    
+                    <a href="#" class="inline-block bg-apple-hover text-apple-white px-4 py-2 rounded-full text-sm hover:bg-[#0077ED] transition-colors">
+                        下载查看
+                    </a>
+                    
+                </div>
+                
+                <div class="card-hover bg-apple-card-gradient rounded-xl p-6 text-center reveal-element">
+                    <div class="w-16 h-16 bg-apple-hover rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-file-pdf text-2xl text-apple-white"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">普通话二级乙等</h3>
+                    <p class="text-apple-gray text-sm mb-4">普通话水平测试</p>
+                    
+                    <a href="#" class="inline-block bg-apple-hover text-apple-white px-4 py-2 rounded-full text-sm hover:bg-[#0077ED] transition-colors">
+                        下载查看
+                    </a>
+                    
+                </div>
+                
+                <div class="card-hover bg-apple-card-gradient rounded-xl p-6 text-center reveal-element">
+                    <div class="w-16 h-16 bg-apple-hover rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-file-pdf text-2xl text-apple-white"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">微信公众号运营</h3>
+                    <p class="text-apple-gray text-sm mb-4">微信公众号运营证书</p>
+                    
+                    <a href="#" class="inline-block bg-apple-hover text-apple-white px-4 py-2 rounded-full text-sm hover:bg-[#0077ED] transition-colors">
+                        下载查看
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- 因子文档 -->
+        <div id="documents-factor-docs" class="documents-category hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <div class="card-hover bg-apple-card-gradient rounded-xl p-6 reveal-element">
+                    <div class="w-16 h-16 bg-apple-hover rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-file-alt text-2xl text-apple-white"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2 text-center">数据预测因子文档</h3>
+                    <p class="text-apple-gray text-sm mb-4 text-center">香烟销量预测项目的因子分析文档</p>
+                    
+                    <p class="text-apple-gray text-xs mb-4 text-center">2025.02</p>
+                    
+                    
+                    <div class="text-center">
+                        <a href="#" class="inline-block bg-apple-hover text-apple-white px-4 py-2 rounded-full text-sm hover:bg-[#0077ED] transition-colors">
+                            下载查看
+                        </a>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        <!-- 数据集 -->
+        <div id="documents-datasets" class="documents-category hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <div class="card-hover bg-apple-card-gradient rounded-xl p-6 reveal-element">
+                    <div class="w-16 h-16 bg-apple-hover rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-database text-2xl text-apple-white"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2 text-center">销售数据集</h3>
+                    <p class="text-apple-gray text-sm mb-2 text-center">香烟销量和销售额历史数据</p>
+                    
+                    <p class="text-apple-gray text-xs mb-2 text-center">大小: 10MB</p>
+                    
+                    
+                    <p class="text-apple-gray text-xs mb-4 text-center">格式: CSV</p>
+                    
+                    
+                    <div class="text-center">
+                        <a href="#" class="inline-block bg-apple-hover text-apple-white px-4 py-2 rounded-full text-sm hover:bg-[#0077ED] transition-colors">
+                            下载数据集
+                        </a>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+// 文档分类切换功能
+document.addEventListener('DOMContentLoaded', function() {
+    const docTabs = document.querySelectorAll('.doc-tab');
+    const docCategories = document.querySelectorAll('.documents-category');
+    
+    docTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // 更新标签状态
+            docTabs.forEach(t => {
+                t.classList.remove('active', 'bg-apple-hover', 'text-apple-white');
+                t.classList.add('border', 'border-apple-gray', 'text-apple-black');
+            });
+            tab.classList.add('active', 'bg-apple-hover', 'text-apple-white');
+            tab.classList.remove('border', 'border-apple-gray', 'text-apple-black');
+            
+            // 显示对应分类
+            const category = tab.getAttribute('data-category');
+            docCategories.forEach(cat => {
+                cat.classList.add('hidden');
+            });
+            const targetCategory = document.getElementById('documents-' + category);
+            if (targetCategory) {
+                targetCategory.classList.remove('hidden');
+            }
+        });
+    });
+});
+</script>
+
+    </div>
+    <!-- 联系区域 -->
+<section id="contact" class="py-20 px-4 md:px-8 bg-apple-lightgray">
+    <div class="container mx-auto max-w-3xl text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6 reveal-element">联系我</h2>
+        <p class="text-apple-gray text-lg mb-10 reveal-element" data-sr-delay="200">
+            欢迎通过以下方式交流，我会尽快回复
+        </p>
+        <div class="flex flex-col md:flex-row justify-center items-center gap-6 mb-8 reveal-element" data-sr-delay="300">
+            <a href="tel:18682166942" class="flex items-center text-lg text-apple-black hover:text-apple-hover transition-colors">
+                <i class="fa-solid fa-phone mr-3 text-apple-hover"></i> 18682166942
+            </a>
+            <span class="text-apple-gray">|</span>
+            <a href="mailto:example@mail.com" class="flex items-center text-lg text-apple-black hover:text-apple-hover transition-colors">
+                <i class="fa-solid fa-envelope mr-3 text-apple-hover"></i> 邮箱联系
+            </a>
+        </div>
+        <div class="flex justify-center space-x-8 text-2xl reveal-element" data-sr-delay="400">
+            
+            <a href="#" class="text-apple-black hover:text-apple-hover transition-all hover:scale-110">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            
+            
+            <a href="#" class="text-apple-black hover:text-apple-hover transition-all hover:scale-110">
+                <i class="fa-brands fa-weixin"></i>
+            </a>
+            
+            
+            <a href="#" class="text-apple-black hover:text-apple-hover transition-all hover:scale-110">
+                <i class="fa-brands fa-python"></i>
+            </a>
+            
+        </div>
+    </div>
+</section>
+
+
+    
+    <!-- 页脚（苹果风格） -->
+<footer class="py-10 px-4 md:px-8 bg-apple-lightgray text-apple-gray">
+    <div class="container mx-auto text-center text-sm">
+        <p>© 2025 梁庭威 | Python技术博客 | 仿苹果官网风格设计</p>
+        <p class="mt-2">数据驱动 · 极简 · 成长</p>
+    </div>
+</footer>
+
+    
+    <!-- JavaScript交互逻辑（苹果风格动画+功能） -->
+    <script>
+        // 1. 导航栏滚动磨砂效果
+        const nav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('nav-scrolled');
+            } else {
+                nav.classList.remove('nav-scrolled');
+            }
+        });
+
+        // 2. 移动端菜单切换
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                // 切换菜单图标（汉堡/叉号）
+                const icon = menuBtn.querySelector('i');
+                if (icon.classList.contains('fa-bars')) {
+                    icon.classList.replace('fa-bars', 'fa-xmark');
+                } else {
+                    icon.classList.replace('fa-xmark', 'fa-bars');
+                }
+            });
+        }
+
+        // 3. 平滑滚动（关闭移动端菜单）
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    const icon = menuBtn.querySelector('i');
+                    if (icon) icon.classList.replace('fa-xmark', 'fa-bars');
+                }
+            });
+        });
+
+        // 4. 苹果风格滚动渐显动画配置
+        ScrollReveal({
+            origin: 'bottom',
+            distance: '20px',
+            duration: 800,
+            easing: 'cubic-bezier(0.25, 0.8, 0.25, 1)',
+            reset: false,
+            viewFactor: 0.1
+        });
+        // 初始化所有带reveal-element类的元素
+        ScrollReveal().reveal('.reveal-element');
+        
+        // 5. 博客分类切换
+        const blogTabs = document.querySelectorAll('.blog-tab');
+        blogTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                blogTabs.forEach(t => t.classList.remove('active', 'bg-apple-hover', 'text-apple-white'));
+                tab.classList.add('active', 'bg-apple-hover', 'text-apple-white');
+                const category = tab.getAttribute('data-category');
+                // 这里可以添加筛选逻辑
+            });
+        });
+        
+        // 6. 文档分类切换
+        const docTabs = document.querySelectorAll('.doc-tab');
+        docTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                docTabs.forEach(t => t.classList.remove('active', 'bg-apple-hover', 'text-apple-white'));
+                tab.classList.add('active', 'bg-apple-hover', 'text-apple-white');
+                const category = tab.getAttribute('data-category');
+                // 这里可以添加筛选逻辑
+            });
+        });
+    </script>
+</body>
+</html>

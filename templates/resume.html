@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人简历 | {{ personal.name }}</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- 自定义Tailwind配置（现代博客风格配色） -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        blog: {
+                            bg: '#FFFFFF',
+                            bgAlt: '#FAFAFA',
+                            text: '#1A1A1A',
+                            textLight: '#6B7280',
+                            textLighter: '#9CA3AF',
+                            border: '#E5E7EB',
+                            accent: '#2563EB',
+                            accentHover: '#1D4ED8',
+                            accentLight: '#DBEAFE'
+                        }
+                    },
+                    fontFamily: {
+                        blog: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif']
+                    },
+                    spacing: {
+                        '18': '4.5rem',
+                        '88': '22rem'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- 自定义样式（现代博客风格） -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            body {
+                line-height: 1.75;
+                letter-spacing: -0.01em;
+            }
+            
+            /* 优雅的时间轴样式 */
+            .timeline-item {
+                position: relative;
+                padding-left: 2.5rem;
+                padding-bottom: 2rem;
+            }
+            .timeline-item:last-child {
+                padding-bottom: 0;
+            }
+            .timeline-item::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0.25rem;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: #2563EB;
+                border: 2px solid #FFFFFF;
+                box-shadow: 0 0 0 2px #E5E7EB;
+                transition: all 0.3s ease;
+            }
+            .timeline-item:hover::before {
+                transform: scale(1.2);
+                box-shadow: 0 0 0 2px #DBEAFE;
+            }
+            .timeline-item::after {
+                content: '';
+                position: absolute;
+                left: 4px;
+                top: 1rem;
+                width: 2px;
+                height: calc(100% - 0.5rem);
+                background: linear-gradient(to bottom, #E5E7EB, transparent);
+            }
+            .timeline-item:last-child::after {
+                display: none;
+            }
+            
+            /* 优雅的卡片样式 */
+            .blog-card {
+                background: #FFFFFF;
+                border: 1px solid #E5E7EB;
+                border-radius: 12px;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .blog-card:hover {
+                border-color: #DBEAFE;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.02);
+                transform: translateY(-2px);
+            }
+            
+            /* 优雅的分隔线 */
+            .section-divider {
+                height: 1px;
+                background: linear-gradient(to right, transparent, #E5E7EB, transparent);
+                margin: 3rem 0;
+            }
+            
+            /* 标签样式 */
+            .tag {
+                display: inline-block;
+                padding: 0.375rem 0.75rem;
+                background: #F3F4F6;
+                border: 1px solid #E5E7EB;
+                border-radius: 6px;
+                font-size: 0.875rem;
+                color: #6B7280;
+                transition: all 0.2s ease;
+            }
+            .tag:hover {
+                background: #DBEAFE;
+                border-color: #2563EB;
+                color: #2563EB;
+            }
+            
+            /* 链接样式 */
+            .blog-link {
+                color: #2563EB;
+                text-decoration: none;
+                border-bottom: 1px solid transparent;
+                transition: all 0.2s ease;
+            }
+            .blog-link:hover {
+                border-bottom-color: #2563EB;
+            }
+        }
+    </style>
+</head>
+
+<body class="font-blog bg-blog-bg text-blog-text antialiased">
+    <!-- 顶部导航栏（简洁现代风格） -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-blog-border shadow-sm">
+        <div class="container mx-auto px-4 md:px-8 py-4 max-w-4xl">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="text-base font-medium text-blog-text hover:text-blog-accent transition-colors flex items-center group">
+                    <i class="fa-solid fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i>返回首页
+                </a>
+                <div class="text-sm text-blog-textLight font-medium">
+                    个人简历
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <main class="container mx-auto px-4 md:px-8 py-16 max-w-3xl">
+        <!-- 个人信息头部（优雅的居中设计） -->
+        <header class="mb-20 text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-4 text-blog-text tracking-tight">{{ personal.name }}</h1>
+            <p class="text-xl md:text-2xl text-blog-textLight mb-8 font-light">{{ personal.job_title }}</p>
+            <div class="flex flex-wrap justify-center gap-6 text-sm text-blog-textLight">
+                <a href="tel:{{ personal.phone }}" class="flex items-center hover:text-blog-accent transition-colors">
+                    <i class="fa-solid fa-phone mr-2"></i>{{ personal.phone }}
+                </a>
+                <span class="text-blog-border">|</span>
+                <a href="mailto:{{ personal.email }}" class="flex items-center hover:text-blog-accent transition-colors">
+                    <i class="fa-solid fa-envelope mr-2"></i>{{ personal.email }}
+                </a>
+                <span class="text-blog-border">|</span>
+                <span class="flex items-center">
+                    <i class="fa-solid fa-location-dot mr-2"></i>{{ personal.city }}
+                </span>
+            </div>
+        </header>
+
+        <!-- 基本信息 -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-blog-text tracking-tight">基本信息</h2>
+            <div class="blog-card p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="flex items-start">
+                        <span class="text-blog-textLight w-28 flex-shrink-0">姓名</span>
+                        <span class="text-blog-text font-medium">{{ personal.name }}</span>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="text-blog-textLight w-28 flex-shrink-0">性别</span>
+                        <span class="text-blog-text font-medium">{{ personal.gender }}</span>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="text-blog-textLight w-28 flex-shrink-0">年龄</span>
+                        <span class="text-blog-text font-medium">{{ personal.age }}岁</span>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="text-blog-textLight w-28 flex-shrink-0">联系方式</span>
+                        <a href="tel:{{ personal.phone }}" class="text-blog-accent hover:text-blog-accentHover blog-link">{{ personal.phone }}</a>
+                    </div>
+                    <div class="flex items-start md:col-span-2">
+                        <span class="text-blog-textLight w-28 flex-shrink-0">求职意向</span>
+                        <span class="text-blog-text font-medium">{{ personal.job_title }}</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 教育经历 -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-blog-text tracking-tight">教育经历</h2>
+            <div class="blog-card p-8">
+                {% for edu in education %}
+                <div class="timeline-item">
+                    <h3 class="text-xl font-bold mb-2 text-blog-text">{{ edu.school }}</h3>
+                    <p class="text-blog-textLight mb-2 font-medium">{{ edu.major }} · {{ edu.degree }}</p>
+                    <p class="text-sm text-blog-textLighter mb-4">{{ edu.start_year }} - {{ edu.end_year }}</p>
+                    <p class="text-blog-text mb-2 leading-relaxed">主修课程：{{ edu.courses | join('、') }}</p>
+                    {% if edu.extra %}
+                    <p class="text-blog-text leading-relaxed mt-2">额外经历：{{ edu.extra }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 实习经历 -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-blog-text tracking-tight">实习经历</h2>
+            <div class="blog-card p-8">
+                {% for exp in experiences %}
+                <div class="timeline-item">
+                    <h3 class="text-xl font-bold mb-2 text-blog-text">{{ exp.company }}</h3>
+                    <p class="text-blog-textLight mb-2 font-medium">{{ exp.position }}</p>
+                    <p class="text-sm text-blog-textLighter mb-4">{{ exp.start_date }} - {{ exp.end_date }}</p>
+                    <ul class="list-none space-y-2 text-blog-text leading-relaxed">
+                        {% for resp in exp.responsibilities %}
+                        <li class="flex items-start">
+                            <span class="text-blog-accent mr-3 mt-1.5 flex-shrink-0">•</span>
+                            <span>{{ resp }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 项目经历 -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-blog-text tracking-tight">项目经历</h2>
+            <div class="space-y-8">
+                {% for project in projects %}
+                <div class="blog-card p-8">
+                    <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold mb-2 text-blog-text">{{ project.name }}</h3>
+                            {% if project.subtitle %}
+                            <p class="text-blog-textLight mb-2">{{ project.subtitle }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="flex flex-col items-start md:items-end mt-2 md:mt-0">
+                            <span class="text-sm text-blog-textLighter mb-1">{{ project.period }}</span>
+                            {% if project.award %}
+                            <span class="text-sm text-blog-accent font-medium">
+                                <i class="fa-solid fa-trophy mr-1"></i>{{ project.award }}
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <p class="text-blog-text mb-4 leading-relaxed">{{ project.description }}</p>
+                    {% if project.details %}
+                    <ul class="list-none space-y-2 mb-4 text-blog-text leading-relaxed">
+                        {% for detail in project.details %}
+                        <li class="flex items-start">
+                            <span class="text-blog-accent mr-3 mt-1.5 flex-shrink-0">•</span>
+                            <span>{{ detail }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% if project.technologies %}
+                    <div class="flex flex-wrap gap-2 mt-6 pt-4 border-t border-blog-border">
+                        {% for tech in project.technologies %}
+                        <span class="tag">{{ tech }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% if project.github or project.demo %}
+                    <div class="flex gap-4 mt-4">
+                        {% if project.github %}
+                        <a href="{{ project.github }}" target="_blank" class="text-blog-accent hover:text-blog-accentHover blog-link text-sm">
+                            <i class="fa-brands fa-github mr-1"></i>GitHub
+                        </a>
+                        {% endif %}
+                        {% if project.demo %}
+                        <a href="{{ project.demo }}" target="_blank" class="text-blog-accent hover:text-blog-accentHover blog-link text-sm">
+                            <i class="fa-solid fa-external-link mr-1"></i>演示
+                        </a>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 技术栈 -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-blog-text tracking-tight">技术栈</h2>
+            <div class="blog-card p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {% for skill in tech_stack %}
+                    <div class="flex items-start group">
+                        <div class="w-14 h-14 bg-blog-accentLight rounded-xl flex items-center justify-center mr-4 flex-shrink-0 group-hover:bg-blog-accent transition-colors">
+                            <i class="{{ skill.icon }} text-xl text-blog-accent group-hover:text-white transition-colors"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold mb-1 text-blog-text">{{ skill.name }}</h3>
+                            <p class="text-sm text-blog-textLight mb-2 leading-relaxed">{{ skill.description }}</p>
+                            <div class="flex items-center gap-2 text-xs text-blog-textLighter">
+                                <span class="px-2 py-0.5 bg-blog-bgAlt rounded">{{ skill.level }}</span>
+                                <span>·</span>
+                                <span>{{ skill.experience }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- 荣誉奖项 -->
+        {% if honors %}
+        <div class="section-divider"></div>
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-blog-text tracking-tight">荣誉奖项</h2>
+            <div class="blog-card p-8">
+                <div class="space-y-6">
+                    {% for honor in honors %}
+                    <div class="pb-6 last:pb-0 border-b border-blog-border last:border-0">
+                        <h3 class="text-lg font-bold mb-1 text-blog-text">{{ honor.title }}</h3>
+                        <p class="text-blog-accent mb-2 font-medium">{{ honor.level }}</p>
+                        <p class="text-sm text-blog-textLight mb-2 leading-relaxed">{{ honor.description }}</p>
+                        <span class="text-xs text-blog-textLighter">{{ honor.date }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- 证书 -->
+        {% if certificates %}
+        <div class="section-divider"></div>
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-blog-text tracking-tight">证书</h2>
+            <div class="blog-card p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {% for cert in certificates %}
+                    <div class="p-4 bg-blog-bgAlt rounded-lg border border-blog-border hover:border-blog-accent transition-colors">
+                        <h3 class="font-bold mb-1 text-blog-text">{{ cert.name }}</h3>
+                        <p class="text-sm text-blog-textLight leading-relaxed">{{ cert.description }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        <div class="section-divider"></div>
+
+        <!-- 联系方式 -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-8 text-blog-text tracking-tight">联系方式</h2>
+            <div class="blog-card p-8">
+                <div class="flex flex-col md:flex-row justify-center items-center gap-8 mb-8">
+                    <a href="tel:{{ personal.phone }}" class="flex items-center text-blog-text hover:text-blog-accent transition-colors group">
+                        <div class="w-12 h-12 bg-blog-accentLight rounded-full flex items-center justify-center mr-3 group-hover:bg-blog-accent transition-colors">
+                            <i class="fa-solid fa-phone text-blog-accent group-hover:text-white transition-colors"></i>
+                        </div>
+                        <span class="font-medium">{{ personal.phone }}</span>
+                    </a>
+                    <a href="mailto:{{ personal.email }}" class="flex items-center text-blog-text hover:text-blog-accent transition-colors group">
+                        <div class="w-12 h-12 bg-blog-accentLight rounded-full flex items-center justify-center mr-3 group-hover:bg-blog-accent transition-colors">
+                            <i class="fa-solid fa-envelope text-blog-accent group-hover:text-white transition-colors"></i>
+                        </div>
+                        <span class="font-medium">{{ personal.email }}</span>
+                    </a>
+                </div>
+                <div class="flex justify-center gap-6 text-2xl pt-6 border-t border-blog-border">
+                    {% if personal.social.github %}
+                    <a href="{{ personal.social.github }}" target="_blank" class="text-blog-textLight hover:text-blog-accent transition-colors transform hover:scale-110">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                    {% endif %}
+                    {% if personal.social.wechat %}
+                    <a href="{{ personal.social.wechat }}" target="_blank" class="text-blog-textLight hover:text-blog-accent transition-colors transform hover:scale-110">
+                        <i class="fa-brands fa-weixin"></i>
+                    </a>
+                    {% endif %}
+                    {% if personal.social.python %}
+                    <a href="{{ personal.social.python }}" target="_blank" class="text-blog-textLight hover:text-blog-accent transition-colors transform hover:scale-110">
+                        <i class="fa-brands fa-python"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="border-t border-blog-border bg-blog-bgAlt py-12 mt-20">
+        <div class="container mx-auto px-4 md:px-8 text-center max-w-3xl">
+            <p class="text-sm text-blog-textLight mb-2">© 2025 {{ personal.name }} | 个人简历</p>
+            <p class="text-sm text-blog-textLighter">{{ personal.site_subtitle }}</p>
+        </div>
+    </footer>
+</body>
+</html>
